@@ -11,6 +11,7 @@ html, body { height: 100%; }
 body {
     font: 1.8em/1.5 'Century Gothic', Verdana, Geneva, 'DejaVu Sans', sans-serif;
     margin: 0;
+    background-color: #eee;
 }
 
 img, video, iframe { max-width: 100%; }
