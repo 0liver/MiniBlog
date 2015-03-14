@@ -193,6 +193,12 @@ footer p {
 
 footer a { color: #a9d2e1; }
 
+#addr-ctnr {
+    background-color: #181818;
+    color: #fff;
+    text-align: center;
+}
+
 /*#endregion */
 
 .slideClone img { float: left; }

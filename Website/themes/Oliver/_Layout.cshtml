@@ -107,7 +107,7 @@
     }
     <span>
         Copyright &copy; @DateTime.Now.Year
-        <a style="cursor: pointer">Oliver</a>
+        <a id="name-link" style="cursor: pointer">Oliver</a>
     </span>
 </footer>
 
@@ -119,6 +119,35 @@
 @if (User.Identity.IsAuthenticated) {
     @RenderPage("~/views/AdminMenu.cshtml")
 }
+
+<script src="@Blog.FingerPrint("/scripts/jquery-2.0.2.js", "//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js")"></script>
+
+<script>
+    $(function() {
+        function showAddr() {
+            $("body")
+                .append("<div id='addr-ctnr'><p>You can reach me at: <span id='addr'></span></p></div>")
+                .find("#addr")
+                .text("oliver" + "\100" + location.hostname);
+        }
+
+        function hideAddr() {
+            $("#addr-ctnr").remove();
+        }
+
+        $(document).on("click.name-link", function(ev) {
+            if (ev.target.id === "name-link") {
+                $("#addr-ctnr").length > 0 ? hideAddr() : showAddr();
+            } else {
+                hideAddr();
+            }
+        });
+        $(document).on("click.name-link", "#addr-ctnr", function(ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+        });
+    });
+</script>
 
 </body>
 </html>
