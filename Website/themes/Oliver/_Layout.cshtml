@@ -1,6 +1,6 @@
 ﻿@{
-    string next = Blog.GetNextPage();
-    string prev = Blog.GetPrevPage();
+    var next = Blog.GetNextPage();
+    var prev = Blog.GetPrevPage();
 }
 <!doctype html>
 <html lang="en-us">
@@ -43,7 +43,7 @@
         <em>@Blog.Description</em>
     </header>
 
-    <div role="main" class="col-md-8">
+    <div role="main" class="col-md-9">
         @RenderBody()
 
         @if (Page.ShowPaging != null) {
@@ -63,11 +63,12 @@
         }
     </div>
 
-    <aside role="complementary" class="col-md-3 col-md-offset-1">
+    <aside role="complementary" class="col-md-3">
         <section>
             <h3>About me</h3>
             <p>
-                I build web applications using ASP.NET, AngularJS, and some jQuery.
+                I'm Oliver, husband and father to two children.<br>
+                At work I build web applications using ASP.NET, Orchard CMS, AngularJS, and some jQuery.
                 I work with a small team of 4 at <a href="http://teamaton.com/">teamaton.com</a>.
             </p>
         </section>
@@ -82,7 +83,9 @@
             </ul>
         </section>
         <section>
-            <h3>Products I work on</h3>
+            <h3>
+                Products <br /> I work on
+            </h3>
             <ul>
                 <li>
                     <a href="http://www.camping.info/">Camping.Info</a>
