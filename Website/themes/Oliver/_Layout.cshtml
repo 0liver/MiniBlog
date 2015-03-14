@@ -1,6 +1,6 @@
 ﻿@{
-	string next = Blog.GetNextPage();
-	string prev = Blog.GetPrevPage();
+    string next = Blog.GetNextPage();
+    string prev = Blog.GetPrevPage();
 }
 <!doctype html>
 <html lang="en-us">
@@ -27,101 +27,101 @@
     <meta property="og:title" content="@Page.Title" />
     <meta property="og:image" content="@Blog.Image" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="@(Request.Url.Scheme +"://" + Request.Url.Authority + Request.RawUrl)" />
-    @if (!string.IsNullOrEmpty(prev))
-	{
-		<link rel="prev" href="@prev" />
-	}
-	@if (!string.IsNullOrEmpty(next))
-	{
-		<link rel="next" href="@next" />
-	}
+    <meta property="og:url" content="@(Request.Url.Scheme + "://" + Request.Url.Authority + Request.RawUrl)" />
+    @if (!string.IsNullOrEmpty(prev)) {
+        <link rel="prev" href="@prev" />
+    }
+    @if (!string.IsNullOrEmpty(next)) {
+        <link rel="next" href="@next" />
+    }
 </head>
-<body itemscope itemtype="http://schema.org/Blog" class="@(User.Identity.IsAuthenticated ? "admin": null)">
+<body itemscope itemtype="http://schema.org/Blog" class="@(User.Identity.IsAuthenticated ? "admin" : null)">
 
-    <div class="container">
-        <header role="banner">
-            <span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
-            <em>@Blog.Description</em>
-        </header>
+<div class="container">
+    <header role="banner">
+        <span><a href="~/" itemprop="url">@Blog.Title</a></span><br />
+        <em>@Blog.Description</em>
+    </header>
 
-        <div role="main" class="col-md-8">
-            @RenderBody()
+    <div role="main" class="col-md-8">
+        @RenderBody()
 
-            @if (Page.ShowPaging != null)
-            {
-                <ul class="pager">
-                    @if (Blog.GetPosts().Count() > Blog.PostsPerPage * Blog.CurrentPage)
-                    {
-                        <li class="previous"><a href="@Blog.GetPagingUrl(1)" rel="prev">&larr; Older</a></li>
-                    }
+        @if (Page.ShowPaging != null) {
+            <ul class="pager">
+                @if (Blog.GetPosts().Count() > Blog.PostsPerPage*Blog.CurrentPage) {
+                    <li class="previous">
+                        <a href="@Blog.GetPagingUrl(1)" rel="prev">&larr; Older</a>
+                    </li>
+                }
 
-                    @if (Blog.CurrentPage > 1)
-                    {
-                        <li class="next"><a href="@Blog.GetPagingUrl(-1)" rel="next">Newer &rarr;</a></li>
-                    }
-                </ul>
-            }
-        </div>
-
-        <aside role="complementary" class="col-md-3 col-md-offset-1">
-            <section>
-                <h3>About me</h3>
-                <p>
-                    I build web applications using ASP.NET, AngularJS, and some jQuery.
-                    I work with a small team of 4 at <a href="http://teamaton.com/">teamaton.com</a>.
-                </p>
-            </section>
-            <section>
-                <h3>Categories</h3>
-                <ul>
-                    @foreach ( var cat in Blog.GetCategories() ) {
-                        <li><a href="~/category/@HttpUtility.UrlEncode(cat.Key.ToLowerInvariant())">@cat.Key (@cat.Value)</a></li>
-                    }
-                </ul>
-            </section>
-            <section>
-                <h3>Products I work on</h3>
-                <ul>
-                    <li><a href="http://www.camping.info/">Camping.Info</a></li>
-                    <li><a href="http://www.discoverize.com/">Discoverize</a></li>
-                    <li>A Time Tracker</li>
-                </ul>
-            </section>
-        </aside>
+                @if (Blog.CurrentPage > 1) {
+                    <li class="next">
+                        <a href="@Blog.GetPagingUrl(-1)" rel="next">Newer &rarr;</a>
+                    </li>
+                }
+            </ul>
+        }
     </div>
 
-    <footer class="text-center" role="contentinfo" itemscope itemtype="http://schema.org/Person" itemprop="author">
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <span class="pull-right">
+    <aside role="complementary" class="col-md-3 col-md-offset-1">
+        <section>
+            <h3>About me</h3>
+            <p>
+                I build web applications using ASP.NET, AngularJS, and some jQuery.
+                I work with a small team of 4 at <a href="http://teamaton.com/">teamaton.com</a>.
+            </p>
+        </section>
+        <section>
+            <h3>Categories</h3>
+            <ul>
+                @foreach (var cat in Blog.GetCategories()) {
+                    <li>
+                        <a href="~/category/@HttpUtility.UrlEncode(cat.Key.ToLowerInvariant())">@cat.Key (@cat.Value)</a>
+                    </li>
+                }
+            </ul>
+        </section>
+        <section>
+            <h3>Products I work on</h3>
+            <ul>
+                <li>
+                    <a href="http://www.camping.info/">Camping.Info</a>
+                </li>
+                <li>
+                    <a href="http://www.discoverize.com/">Discoverize</a>
+                </li>
+                <li>A Time Tracker</li>
+            </ul>
+        </section>
+    </aside>
+</div>
+
+<footer class="text-center" role="contentinfo" itemscope itemtype="http://schema.org/Person" itemprop="author">
+    @if (!User.Identity.IsAuthenticated) {
+        <span class="pull-right">
                 <a href="@FormsAuthentication.LoginUrl?ReturnUrl=@Request.RawUrl">Sign in <i class="glyphicon glyphicon-log-in"></i></a>
             </span>
-        }
-        <span>
+    }
+    <span>
             Copyright &copy; @DateTime.Now.Year
             <a href="http://teamaton.com/" itemprop="url name">Oliver Friedrich</a>
         </span>
-    </footer>
+</footer>
 
 
-    @if ((Blog.CurrentPost != null && Blog.CurrentPost.AreCommentsOpen(Context)) || Blog.IsNewPost)
-    {
-        <script src="@Blog.FingerPrint("/scripts/comments.js")" async defer></script>
-    }
+@if ((Blog.CurrentPost != null && Blog.CurrentPost.AreCommentsOpen(Context)) || Blog.IsNewPost) {
+    <script src="@Blog.FingerPrint("/scripts/comments.js")" async defer></script>
+}
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        @RenderPage("~/views/AdminMenu.cshtml")
-    }
+@if (User.Identity.IsAuthenticated) {
+    @RenderPage("~/views/AdminMenu.cshtml")
+}
 
 </body>
 </html>
 
-@helper AdminCss()
-{
-    if (User.Identity.IsAuthenticated)
-    {
+@helper AdminCss() {
+    if (User.Identity.IsAuthenticated) {
         <link href="@Blog.FingerPrint("/css/admin.css")" rel="stylesheet" />
     }
 }

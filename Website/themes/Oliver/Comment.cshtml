@@ -9,38 +9,31 @@
     @ApprovalMessage()
 </article>
 
-@helper Date()
-{
+@helper Date() {
     var title = Model.PubDate.ToString("yyyy-MM-ddTHH:mm");
     var display = Model.PubDate.ToString("MMMM d. yyyy HH:mm");
     <time datetime="@title" itemprop="commentTime">@display</time>
 }
-@helper Author()
-{
-    if (string.IsNullOrEmpty(Model.Website))
-    {
+@helper Author() {
+    if (string.IsNullOrEmpty(Model.Website)) {
         <strong itemprop="creator">@Model.Author</strong>
     }
-    else
-    {
-        <strong itemprop="creator"><a href="@Model.Website" itemprop="url" rel="nofollow">@Model.Author</a></strong>
+    else {
+        <strong itemprop="creator">
+            <a href="@Model.Website" itemprop="url" rel="nofollow">@Model.Author</a>
+        </strong>
     }
 }
-@helper DeleteAndApproveButton()
-{
-    if (User.Identity.IsAuthenticated)
-    {
+@helper DeleteAndApproveButton() {
+    if (User.Identity.IsAuthenticated) {
         <button class="deletecomment btn btn-link">Delete</button>
-        if (Blog.ModerateComments && !Model.IsApproved)
-        {
+        if (Blog.ModerateComments && !Model.IsApproved) {
             <button class="approvecomment btn btn-link">Approve</button>
         }
     }
 }
-@helper ApprovalMessage()
-{
-    if (Blog.ModerateComments && !Model.IsApproved && !User.Identity.IsAuthenticated)
-    {
+@helper ApprovalMessage() {
+    if (Blog.ModerateComments && !Model.IsApproved && !User.Identity.IsAuthenticated) {
         <div itemprop="approvalWarning">! The comment will not be visible until a moderator approves it !</div>
     }
 }
