@@ -28,7 +28,8 @@ public class WhitespaceModule : IHttpModule
         int status = app.Response.StatusCode;
         IHttpHandler handler = app.Context.CurrentHandler;
 
-        if (contentType == "text/html" && method == "GET" && status == 200 && handler != null)
+        if (!app.Context.IsDebuggingEnabled && 
+            contentType == "text/html" && method == "GET" && status == 200 && handler != null)
         {
             app.Response.Filter = new WhitespaceFilter(app.Response.Filter, app.Request.ContentEncoding);
         }
