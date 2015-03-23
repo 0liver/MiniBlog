@@ -129,6 +129,7 @@
                 .append("<div id='addr-ctnr'><p>You can reach me at: <span id='addr'></span></p></div>")
                 .find("#addr")
                 .text("oliver" + "\100" + location.hostname);
+            scrollTo(0, $(document).height());
         }
 
         function hideAddr() {
